@@ -58,7 +58,7 @@ bool Item::IsThisFirst()
 
 bool Item::IsThisLast()
 {
-	return ThisIsFirst;
+	return ThisIsLast;
 }
 
 void Item::SetToLast(bool decision)
@@ -73,7 +73,7 @@ void Item::SetToLast(bool decision)
 
 void Item::SetToFirst(bool decision)
 {
-	if ((this->_Previous == NULL) && (decision))
+	if ((this->_Previous != NULL) && (decision))
 	{
 		std::cout << "[ERROR] - Item::SetToFirst(True).  Set Previous pointer to NULL prior to running this line" << std::endl;
 		return;
