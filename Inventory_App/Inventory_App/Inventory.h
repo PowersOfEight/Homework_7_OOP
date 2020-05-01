@@ -16,6 +16,7 @@ public:
 	Item* GetFirst();
 	Item* GetLast();
 	int GetCount();
+	void AddCount();
 	
 	void SetFirstItem(Item*);
 	void SetLastItem(Item*);

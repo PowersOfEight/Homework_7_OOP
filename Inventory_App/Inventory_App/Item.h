@@ -32,19 +32,11 @@ public:
 	std::string GetDesc();
 	void SetDesc(std::string);
 
-	bool IsThisFirst();
-	bool IsThisLast();
-
-	void SetToLast(bool);
-	void SetToFirst(bool);
-
 	Item* GetNext();
 	void SetNext(Item*);
 
 	Item* GetPrevious();
 	void SetPrevious(Item*);
-
-
 };
 #endif // !ITEM_H
 

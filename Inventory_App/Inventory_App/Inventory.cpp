@@ -28,18 +28,21 @@ int Inventory::GetCount()
 	return this->_Count;
 }
 
+void Inventory::AddCount()
+{
+	_Count++;
+}
+
 void Inventory::SetFirstItem(Item* thisItem)
 {
 	this->_First = thisItem;
 	thisItem->SetPrevious(NULL);
-	thisItem->SetToFirst(true);
 }
 
 void Inventory::SetLastItem(Item* thisItem)
 {
 	this->_Last = thisItem;
 	thisItem->SetNext(NULL);
-	thisItem->SetToLast(true);
 }
 
 void Inventory::AddFirstItem(Item* thisItem)//to run if no item had been added
@@ -66,11 +69,12 @@ void Inventory::AddItemToFront(Item* thisItem)
 	{
 		this->_First->SetPrevious(thisItem);
 		thisItem->SetNext(this->_First);
-		this->_First->SetToFirst(false);
+		//this->_First->SetToFirst(false);
 	}
 
-	this->_First = thisItem;
-	thisItem->SetToFirst(true);
+	this->SetFirstItem(thisItem);
+	//this->_First = thisItem;
+	//thisItem->SetToFirst(true);
 	this->_Count++;
 }
 
@@ -86,11 +90,8 @@ void Inventory::AddItemToBack(Item* thisItem)
 	{
 		this->_Last->SetNext(thisItem);
 		thisItem->SetPrevious(this->_Last);
-		this->_Last->SetToLast(false);
 	}
-
-	this->_Last = thisItem;
-	thisItem->SetToLast(true);
+	this->SetLastItem(thisItem);
 	this->_Count++;
 }
 
@@ -102,37 +103,34 @@ void Inventory::RemoveItem(Item* thisItem)
 		std::cout << "[ERROR] - RemoveItem(NULL) - Inventory.cpp line 101" << std::endl;
 		return;
 	}
-
-	if ((thisItem->GetPrevious() != NULL) && (thisItem->GetNext() != NULL))
-	{
-		
-		thisItem->GetPrevious()->SetNext(thisItem->GetNext());
-		thisItem->GetNext()->SetPrevious(thisItem->GetPrevious());
-	}
-	if (thisItem == this->_First)
+	if (thisItem->GetPrevious() == NULL)
 	{
 		if (thisItem->GetNext() != NULL)
 		{
 			this->SetFirstItem(thisItem->GetNext());
+			thisItem->SetNext(NULL);
+			thisItem->SetPrevious(NULL);
 		}
-		thisItem->SetToFirst(false);
+		//thisItem->SetToFirst(false);
 	}
-	if (thisItem == this->_Last)
+	if (thisItem->GetNext() == NULL)
 	{
-		std::cout << "Is this last was thrown true on:  " << thisItem->GetName() << std::endl;
 		if (thisItem->GetPrevious() != NULL)
 		{
 			this->SetLastItem(thisItem->GetPrevious());
+			thisItem->SetPrevious(NULL);
+			thisItem->SetNext(NULL);
 		}
-		thisItem->SetToLast(false);
+		//thisItem->SetToLast(false);
 	}
-
-	if ((thisItem->GetPrevious() != NULL) && (thisItem->GetNext() != NULL))
+	if ((thisItem->GetPrevious() != NULL) && (thisItem->GetNext() != NULL))//check on this, did this run?
 	{
-		std::cout << "[ERROR] - You've failed to remove pointers" << std::endl;
+		thisItem->GetPrevious()->SetNext(thisItem->GetNext());
+		thisItem->GetNext()->SetPrevious(thisItem->GetPrevious());
 		thisItem->SetPrevious(NULL);
 		thisItem->SetNext(NULL);
 	}
+
 	this->_Count--;
 
 }

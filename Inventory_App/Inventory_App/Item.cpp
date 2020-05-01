@@ -2,12 +2,8 @@
 
 Item::Item()
 {
-	this->ThisIsFirst = false;//These are both false at init because they haven't been added to a list yet
-	this->ThisIsLast = false; //These are both false at init because they haven't been added to a list yet
-
 	this->_Previous = NULL;//These set to NULL until they are added to list
 	this->_Next = NULL;	   //These set to NULL until they are added to list
-
 
 	this->_Price = 0.00;//Initialized to prevent warnings :-P
 	this->_Name = "";	//Initialized to prevent warnings :-P
@@ -18,7 +14,6 @@ Item::~Item()
 {
 	this->_Previous = NULL;
 	this->_Next = NULL;
-
 }
 
 std::string Item::GetName()
@@ -49,36 +44,6 @@ std::string Item::GetDesc()
 void Item::SetDesc(std::string Desc)
 {
 	this->_Desc = Desc;
-}
-
-bool Item::IsThisFirst()
-{
-	return ThisIsFirst;
-}
-
-bool Item::IsThisLast()
-{
-	return ThisIsLast;
-}
-
-void Item::SetToLast(bool decision)
-{
-	if ((this->_Next != NULL) && (decision))
-	{
-		std::cout << "[ERROR] - Item::SetToLast(True).  Set Next pointer to NULL prior to running this line" << std::endl;
-		return;
-	}
-	this->ThisIsLast = decision;
-}
-
-void Item::SetToFirst(bool decision)
-{
-	if ((this->_Previous != NULL) && (decision))
-	{
-		std::cout << "[ERROR] - Item::SetToFirst(True).  Set Previous pointer to NULL prior to running this line" << std::endl;
-		return;
-	}
-	this->ThisIsFirst = decision;
 }
 
 Item* Item::GetNext()
