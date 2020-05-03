@@ -13,6 +13,8 @@ Inventory::~Inventory()
 	_Last = NULL;
 }
 
+
+
 Item* Inventory::GetFirst()
 {
 	return _First;
@@ -69,12 +71,9 @@ void Inventory::AddItemToFront(Item* thisItem)
 	{
 		this->_First->SetPrevious(thisItem);
 		thisItem->SetNext(this->_First);
-		//this->_First->SetToFirst(false);
 	}
 
 	this->SetFirstItem(thisItem);
-	//this->_First = thisItem;
-	//thisItem->SetToFirst(true);
 	this->_Count++;
 }
 
@@ -103,7 +102,7 @@ void Inventory::RemoveItem(Item* thisItem)
 		std::cout << "[ERROR] - RemoveItem(NULL) - Inventory.cpp line 101" << std::endl;
 		return;
 	}
-	if (thisItem->GetPrevious() == NULL)
+	if (thisItem == this->GetFirst())
 	{
 		if (thisItem->GetNext() != NULL)
 		{
@@ -111,9 +110,8 @@ void Inventory::RemoveItem(Item* thisItem)
 			thisItem->SetNext(NULL);
 			thisItem->SetPrevious(NULL);
 		}
-		//thisItem->SetToFirst(false);
 	}
-	if (thisItem->GetNext() == NULL)
+	if (thisItem == this->GetLast())
 	{
 		if (thisItem->GetPrevious() != NULL)
 		{
@@ -121,7 +119,6 @@ void Inventory::RemoveItem(Item* thisItem)
 			thisItem->SetPrevious(NULL);
 			thisItem->SetNext(NULL);
 		}
-		//thisItem->SetToLast(false);
 	}
 	if ((thisItem->GetPrevious() != NULL) && (thisItem->GetNext() != NULL))//check on this, did this run?
 	{
@@ -130,8 +127,6 @@ void Inventory::RemoveItem(Item* thisItem)
 		thisItem->SetPrevious(NULL);
 		thisItem->SetNext(NULL);
 	}
-
 	this->_Count--;
-
 }
 

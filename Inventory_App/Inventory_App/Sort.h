@@ -20,9 +20,5 @@ public:
 
 	void SwitchItem(Inventory*, Item*, Item*);
 	void BubbleSort(Inventory*);
-
-
 };
-
-
 #endif // !SORT_H

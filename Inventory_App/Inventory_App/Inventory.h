@@ -12,7 +12,7 @@ class Inventory
 public:
 	Inventory();
 	~Inventory();
-
+	
 	Item* GetFirst();
 	Item* GetLast();
 	int GetCount();
@@ -26,9 +26,5 @@ public:
 	void AddItemToFront(Item*);
 	void AddItemToBack(Item*);
 	void RemoveItem(Item*);
-	
-
 };
-
-
 #endif // !INVENTORY_H

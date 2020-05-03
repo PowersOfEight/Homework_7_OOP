@@ -1,0 +1,15 @@
+Ramen
+0.55
+Perfect for that starving college student. 
+La Croix
+3
+It's a real hit around this office
+Cheese
+3.48
+It's a hunk of cheese!
+Milk
+5.68
+It's good to drink this while eating Honey Bread
+Honey Bread
+7.68
+It's delicious, just like Mom used to make!

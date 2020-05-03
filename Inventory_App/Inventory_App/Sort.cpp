@@ -67,6 +67,11 @@ void SortBot::SwitchItem(Inventory* inventory, Item* left, Item* right)
 
 void SortBot::BubbleSort(Inventory* inventory)
 {	
+	if (inventory->GetCount() < 2)
+	{
+		std::cout << "Not enough entries to sort.  Please try again." << std::endl;
+		return;
+	}
 	Item* currentPointer = NULL;
 	Item* nextPointer = NULL;
 	int changesThisTurn = 0;
@@ -90,12 +95,9 @@ void SortBot::BubbleSort(Inventory* inventory)
 			advanced = false;
 			if (currentPointer->GetPrice() > nextPointer->GetPrice())
 			{
-				std::cout << "Switching items " << currentPointer->GetName() << " and " << nextPointer->GetName() << std::endl;
 				this->SwitchItem(inventory, currentPointer, nextPointer);
 				advanced = true;
 				changesThisTurn++;
-				std::cout << "Switch successfully made, switches this innerloop: " << changesThisTurn << std::endl;
-				std::cout << "Current Pointer is " << currentPointer->GetName() << " and next Pointer is " << nextPointer->GetName() << std::endl;
 			}
 			goRound++;
 		} 

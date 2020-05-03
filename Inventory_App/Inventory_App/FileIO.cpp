@@ -40,12 +40,19 @@ int FileIO::countFileLines()
 	std::string line;
 	CloseAll();
 	OpenInputFile();
-	do
+	if (this->_FileInput.good())
 	{
-		getline(this->_FileInput, line);
-		numberOfLines++;
-	} while (!this->_FileInput.eof());
+		do
+		{
+			getline(this->_FileInput, line);
+			numberOfLines++;
+		} while (!this->_FileInput.eof());
+	}
 	this->_FileInput.close();
+	if (numberOfLines < 0)
+	{
+		numberOfLines = 0;
+	}
 	return numberOfLines;
 }
 
@@ -60,26 +67,57 @@ Inventory* FileIO::CreateInvFromFile()
 {
 	Inventory* inventory = new Inventory;
 	int numberOfLines = countFileLines();
-	Item* item;
-	std::string line;
+	Item* item = NULL;
+	std::string nameLine;
+	std::string trashLine;
+	std::string descLine;
 	double priceLine = 0.00;
 	CloseAll();
 	OpenInputFile();
 	while (numberOfLines > 0)
 	{
 		item = new Item;
-		getline(this->_FileInput, line);
-		item->SetName(line);
+		getline(this->_FileInput, nameLine);
+		item->SetName(nameLine);
 		this->_FileInput >> priceLine;
 		item->SetPrice(priceLine);
-		getline(this->_FileInput, line);
-		getline(this->_FileInput, line);
-		item->SetDesc(line);
+		getline(this->_FileInput, trashLine);
+		getline(this->_FileInput, descLine);
+		item->SetDesc(descLine);
 		inventory->AddItemToBack(item);
 		numberOfLines = numberOfLines - 3;
 	}
 	this->_FileInput.close();
-	delete item;
 	return inventory;
+}
+
+void FileIO::WriteInventoryToFile(Inventory* inventory)
+{
+	TruncateFile();
+	OpenOutputFile();
+	if (inventory->GetFirst() == NULL)
+	{
+		return;
+	}
+	Item* currentPointer = inventory->GetFirst();
+	do
+	{
+		this->_FileOutput << currentPointer->GetName() << std::endl;
+		this->_FileOutput << currentPointer->GetPrice() << std::endl;
+		this->_FileOutput << currentPointer->GetDesc() << std::endl;
+		currentPointer = currentPointer->GetNext();
+	}while (currentPointer != NULL);
+	this->_FileOutput.close();
+	std::cout << "Inventory saved to file!" << std::endl;
+}
+
+void FileIO::AddItemToFile(Item* item)
+{
+	CloseAll();
+	OpenOutputFile();
+	this->_FileOutput << item->GetName() << std::endl;
+	this->_FileOutput << item->GetPrice() << std::endl;
+	this->_FileOutput << item->GetDesc() << std::endl;
+	this->_FileOutput.close();
 }
 

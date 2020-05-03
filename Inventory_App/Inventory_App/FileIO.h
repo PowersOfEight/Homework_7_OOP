@@ -18,25 +18,12 @@ public:
 	void CloseAll();
 	void OpenOutputFile();
 	void OpenInputFile();
-
 	int countFileLines();
-
 	void TruncateFile();
+	
 
 	Inventory* CreateInvFromFile();
-	//still need to write inventory to file, and need to integrate this with the menu
-
-
+	void WriteInventoryToFile(Inventory*);
+	void AddItemToFile(Item*);
 };
-
-
-
-
-
-
-
-
-
-
-
 #endif // !FILEIO_H

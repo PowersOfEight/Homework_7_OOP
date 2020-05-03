@@ -6,8 +6,6 @@
 
 class Item
 {
-	
-
 	std::string _Name;
 	double _Price;
 	std::string _Desc;
@@ -15,9 +13,6 @@ class Item
 	//List Pointers
 	Item* _Next;
 	Item* _Previous;
-	//Position bool
-	bool ThisIsFirst;
-	bool ThisIsLast;
 
 public:
 	Item();

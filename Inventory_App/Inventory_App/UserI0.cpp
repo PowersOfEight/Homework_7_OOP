@@ -25,9 +25,9 @@ void UserIO::PrintInventory(Inventory* inventory)
 		std::cout << "Name: " << currentItem->GetName() << std::endl;
 		std::cout << "Price: " << currentItem->GetPrice() << std::endl;
 		std::cout << "Description: " << currentItem->GetDesc() << std::endl;
-		std::cout << currentItem->GetName() << " current *Next: " << currentItem->GetNext() << std::endl;
-		std::cout << currentItem->GetName() << " current *Previous: " << currentItem->GetPrevious() << std::endl;
-		std::cout << currentItem->GetName() << " address: " << currentItem << std::endl;
+		//std::cout << currentItem->GetName() << " current *Next: " << currentItem->GetNext() << std::endl;
+		//std::cout << currentItem->GetName() << " current *Previous: " << currentItem->GetPrevious() << std::endl;
+		//std::cout << currentItem->GetName() << " address: " << currentItem << std::endl;
 		if (currentItem->GetNext() != NULL)
 		{
 			currentItem = currentItem->GetNext();
@@ -37,7 +37,7 @@ void UserIO::PrintInventory(Inventory* inventory)
 
 }
 
-void UserIO::AddItem(Inventory* thisInventory)
+void UserIO::AddItem(Inventory* thisInventory, FileIO* FileBot)
 {
 	Item* newItem = new Item;
 	double x = 0.00;
@@ -60,18 +60,19 @@ void UserIO::AddItem(Inventory* thisInventory)
 	getline(std::cin, descLine);
 	newItem->SetDesc(descLine);
 	thisInventory->AddItemToBack(newItem);
-
+	FileBot->AddItemToFile(newItem);
 }
 
-void UserIO::SortItems(Inventory* inventory)
+void UserIO::SortItems(Inventory* inventory, FileIO* FileBot)
 {
 	SortBot* sortBot = new SortBot;
 	sortBot->BubbleSort(inventory);
+	FileBot->WriteInventoryToFile(inventory);
 	delete sortBot;
 }
 
 
-void UserIO::MainMenu(Inventory* thisInventory) 
+void UserIO::MainMenu(Inventory* thisInventory, FileIO* FileBot) 
 {
 	
 	std::string userSelection = "";
@@ -104,13 +105,13 @@ void UserIO::MainMenu(Inventory* thisInventory)
 		switch (this->_Selection)
 		{
 		case _MenuState::Add:
-			this->AddItem(thisInventory);
+			this->AddItem(thisInventory, FileBot);
 			break;
 		case _MenuState::Print:
 			this->PrintInventory(thisInventory);
 			break;
 		case _MenuState::Sort:
-			this->SortItems(thisInventory);
+			this->SortItems(thisInventory, FileBot);
 			break;
 		case _MenuState::Exit:
 			std::cout << "Goodbye" << std::endl;
